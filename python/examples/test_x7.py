@@ -20,8 +20,8 @@ def easeInOutQuad(t):
 
 def main():
     np.set_printoptions(precision=3, suppress=True)
-    x7_left = arx5.Arx5JointController("X7Left", "can_x7left")
-    # x7_left = arx5.Arx5JointController("X7left", "can_x7left")
+    x7_left = arx5.Arx5JointController("X7Left", "can0")
+    # x7_left = arx5.Arx5JointController("X7left", "can1")
     # x7_left.set_log_level(arx5.LogLevel.DEBUG)
     x7_left.enable_background_send_recv()
     # x7_left.reset_to_home()
