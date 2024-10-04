@@ -26,11 +26,16 @@ def main():
     x7_right.enable_background_send_recv()
     x7_right.reset_to_home()
     gain = x7_right.get_gain()
-    gain.kd()[:] *= 0.1
-    gain.kp()[:] *= 0.1
+    gain.kp()[:] = 0
     x7_right.set_gain(gain)
-    x7_right.set_to_damping()
+    x7_right_solver = arx5.Arx5Solver("../models/arx7_right.urdf", 7)
 
+    # x7_right.enable_gravity_compensation("../models/arx7_right.urdf")
+    while True:
+        joint_state = x7_right.get_state()
+        ee_pose = x7_right_solver.forward_kinematics(joint_state.pos())
+        print(ee_pose)
+        time.sleep(0.1)
 
     # arx5_0 = arx5.Arx5JointController("X7Left", "can0")
     # arx5_1 = arx5.Arx5JointController("X5", "can1")

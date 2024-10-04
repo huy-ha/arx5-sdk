@@ -450,4 +450,18 @@
       effort="100"
       velocity="1000" />
   </joint>
+  
+    <link name="eef_link">
+    <inertial>
+        <mass value="0.0"/>
+        <origin xyz="0.0 0.0 0.0"  rpy="0 0 0"/>
+        <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+    </inertial>
+    </link>
+
+    <joint name="gripper_fixed_joint" type="fixed">
+        <origin xyz="0.145 0.0 0.0" rpy="0 0 0"/>
+        <parent link="link7"/>
+        <child link="eef_link"/>
+    </joint>
 </robot>
