@@ -108,15 +108,13 @@ def start_teleop_recording(controller: Arx5CartesianController):
 
 
 @click.command()
-@click.argument("model")  # ARX arm model: X5 or L5
+@click.argument("model")  # ARX arm model: X5, L5, X7Left, or X7Right
 @click.argument("interface")  # can bus name (can0 etc.)
 @click.option("--urdf_path", "-u", default="../models/arx5.urdf", help="URDF file path")
 def main(model: str, interface: str, urdf_path: str):
     controller = Arx5CartesianController(model, interface, urdf_path)
-    controller.reset_to_home()
-
     robot_config = controller.get_robot_config()
-    gain = Gain(robot_config.joint_dof)
+    controller.reset_to_home()
     controller.set_log_level(LogLevel.DEBUG)
     np.set_printoptions(precision=4, suppress=True)
     try:

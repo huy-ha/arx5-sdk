@@ -176,7 +176,7 @@ class RobotConfigFactory
 class ControllerConfig
 {
   public:
-    std::string controller_type;
+    std::string controller_type; // TODO refactor to ENUM
     VecDoF default_kp;
     VecDoF default_kd;
     double default_gripper_kp;
@@ -219,7 +219,24 @@ class ControllerConfigFactory
   private:
     ControllerConfigFactory()
     {
-        configurations["joint_controller"] = std::make_shared<ControllerConfig>(
+        configurations["X5_joint_controller"] = std::make_shared<ControllerConfig>(
+            "joint_controller",                                           // controller_type
+            (VecDoF(6) << 70.0, 70.0, 70.0, 30.0, 30.0, 20.0).finished(), // default_kp
+            (VecDoF(6) << 2.0, 2.0, 2.0, 1.0, 1.0, 0.7).finished(),       // default_kd
+            5.0,                                                          // default_gripper_kp
+            0.2,                                                          // default_gripper_kd
+            20,                                                           // over_current_cnt_max
+            0.002);                                                       // controller_dt
+        configurations["X5_cartesian_controller"] = std::make_shared<ControllerConfig>(
+            "cartesian_controller",                                          // controller_type
+            (VecDoF(6) << 300.0, 300.0, 300.0, 80.0, 50.0, 40.0).finished(), // default_kp
+            (VecDoF(6) << 5.0, 5.0, 5.0, 1.0, 1.0, 1.0).finished(),          // default_kd
+            5.0,                                                             // default_gripper_kp
+            0.2,                                                             // default_gripper_kd
+            20,                                                              // over_current_cnt_max
+            0.005 // controller_dt                                                               // controller_dt
+        );
+        configurations["X7Left_joint_controller"] = std::make_shared<ControllerConfig>(
             "joint_controller",                                                 // controller_type
             (VecDoF(7) << 80.0, 70.0, 70.0, 70.0, 30.0, 30.0, 20.0).finished(), // default_kp
             (VecDoF(7) << 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 0.7).finished(),        // default_kd
@@ -228,7 +245,25 @@ class ControllerConfigFactory
             20,                                                                 // over_current_cnt_max
             0.002                                                               // controller_dt
         );
-        configurations["cartesian_controller"] = std::make_shared<ControllerConfig>(
+        configurations["X7Left_cartesian_controller"] = std::make_shared<ControllerConfig>(
+            "cartesian_controller",                                                 // controller_type
+            (VecDoF(7) << 300.0, 300.0, 300.0, 300.0, 80.0, 50.0, 40.0).finished(), // default_kp
+            (VecDoF(7) << 5.0, 5.0, 5.0, 5.0, 1.0, 1.0, 1.0).finished(),            // default_kd
+            5.0,                                                                    // default_gripper_kp
+            0.2,                                                                    // default_gripper_kd
+            20,                                                                     // over_current_cnt_max
+            0.005                                                                   // controller_dt
+        );
+        configurations["X7Right_joint_controller"] = std::make_shared<ControllerConfig>(
+            "joint_controller",                                                 // controller_type
+            (VecDoF(7) << 80.0, 70.0, 70.0, 70.0, 30.0, 30.0, 20.0).finished(), // default_kp
+            (VecDoF(7) << 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 0.7).finished(),        // default_kd
+            5.0,                                                                // default_gripper_kp
+            0.2,                                                                // default_gripper_kd
+            20,                                                                 // over_current_cnt_max
+            0.002                                                               // controller_dt
+        );
+        configurations["X7Right_cartesian_controller"] = std::make_shared<ControllerConfig>(
             "cartesian_controller",                                                 // controller_type
             (VecDoF(7) << 300.0, 300.0, 300.0, 300.0, 80.0, 50.0, 40.0).finished(), // default_kp
             (VecDoF(7) << 5.0, 5.0, 5.0, 5.0, 1.0, 1.0, 1.0).finished(),            // default_kd
