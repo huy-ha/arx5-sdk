@@ -202,9 +202,10 @@ class ControllerConfigFactory
         return instance;
     }
 
-    ControllerConfig get_config(const std::string &controller_type)
+    ControllerConfig get_config(const std::string &controller_type, const int joint_dof)
     {
-        auto it = configurations.find(controller_type);
+
+        auto it = configurations.find(sprintf("%s_%d", controller_type.c_str(), joint_dof));
         if (it != configurations.end())
         {
             return *(it->second);
@@ -219,7 +220,7 @@ class ControllerConfigFactory
   private:
     ControllerConfigFactory()
     {
-        configurations["joint_controller"] = std::make_shared<ControllerConfig>(
+        configurations["joint_controller_7"] = std::make_shared<ControllerConfig>(
             "joint_controller",                                                 // controller_type
             (VecDoF(7) << 80.0, 70.0, 70.0, 70.0, 30.0, 30.0, 20.0).finished(), // default_kp
             (VecDoF(7) << 2.0, 2.0, 2.0, 2.0, 1.0, 1.0, 0.7).finished(),        // default_kd
@@ -228,7 +229,16 @@ class ControllerConfigFactory
             20,                                                                 // over_current_cnt_max
             0.002                                                               // controller_dt
         );
-        configurations["cartesian_controller"] = std::make_shared<ControllerConfig>(
+        configurations["joint_controller_6"] = std::make_shared<ControllerConfig>(
+            "joint_controller",                                           // controller_type
+            (VecDoF(6) << 80.0, 70.0, 70.0, 30.0, 30.0, 20.0).finished(), // default_kp
+            (VecDoF(6) << 2.0, 2.0, 2.0, 1.0, 1.0, 0.7).finished(),       // default_kd
+            5.0,                                                          // default_gripper_kp
+            0.2,                                                          // default_gripper_kd
+            20,                                                           // over_current_cnt_max
+            0.002                                                         // controller_dt
+        );
+        configurations["cartesian_controller_7"] = std::make_shared<ControllerConfig>(
             "cartesian_controller",                                                 // controller_type
             (VecDoF(7) << 300.0, 300.0, 300.0, 300.0, 80.0, 50.0, 40.0).finished(), // default_kp
             (VecDoF(7) << 5.0, 5.0, 5.0, 5.0, 1.0, 1.0, 1.0).finished(),            // default_kd
@@ -236,6 +246,15 @@ class ControllerConfigFactory
             0.2,                                                                    // default_gripper_kd
             20,                                                                     // over_current_cnt_max
             0.005                                                                   // controller_dt
+        );
+        configurations["cartesian_controller_6"] = std::make_shared<ControllerConfig>(
+            "cartesian_controller",                                          // controller_type
+            (VecDoF(7) << 300.0, 300.0, 300.0, 80.0, 50.0, 40.0).finished(), // default_kp
+            (VecDoF(7) << 5.0, 5.0, 5.0, 1.0, 1.0, 1.0).finished(),          // default_kd
+            5.0,                                                             // default_gripper_kp
+            0.2,                                                             // default_gripper_kd
+            20,                                                              // over_current_cnt_max
+            0.005                                                            // controller_dt
         );
     }
     std::unordered_map<std::string, std::shared_ptr<ControllerConfig>> configurations;
