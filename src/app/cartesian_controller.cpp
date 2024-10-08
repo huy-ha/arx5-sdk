@@ -26,8 +26,8 @@ Arx5CartesianController::Arx5CartesianController(RobotConfig robot_config, Contr
 Arx5CartesianController::Arx5CartesianController(std::string model, std::string interface_name, std::string urdf_path)
     : Arx5CartesianController::Arx5CartesianController(
           RobotConfigFactory::get_instance().get_config(model),
-          ControllerConfigFactory::get_instance().get_config(model + std::string("_") +
-                                                             std::string("cartesian_controller")),
+          ControllerConfigFactory::get_instance().get_config(
+              "cartesian_controller", RobotConfigFactory::get_instance().get_config(model).joint_dof),
           interface_name, urdf_path)
 {
 }

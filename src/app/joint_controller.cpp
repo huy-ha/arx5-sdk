@@ -19,10 +19,11 @@ Arx5JointController::Arx5JointController(RobotConfig robot_config, ControllerCon
 }
 
 Arx5JointController::Arx5JointController(std::string model, std::string interface_name)
-    : Arx5JointController::Arx5JointController(RobotConfigFactory::get_instance().get_config(model),
-                                               ControllerConfigFactory::get_instance().get_config(
-                                                   model + std::string("_") + std::string("joint_controller")),
-                                               interface_name)
+    : Arx5JointController::Arx5JointController(
+          RobotConfigFactory::get_instance().get_config(model),
+          ControllerConfigFactory::get_instance().get_config(
+              "joint_controller", RobotConfigFactory::get_instance().get_config(model).joint_dof),
+          interface_name)
 
 {
 }
